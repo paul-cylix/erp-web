@@ -244,7 +244,7 @@ Route::group(['middleware'=>['AuthCheck']], function(){
 
             
 
-
+            Route::post('/dropzone-action',[AccountingRequestController::class, 'action'])->name('dropzone-action');
 
 
 

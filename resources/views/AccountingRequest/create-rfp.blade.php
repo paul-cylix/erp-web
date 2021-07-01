@@ -3,7 +3,6 @@
 @section('content')
 
 @if(Session::get('form_submitted'))
-{{-- <div class="container" ><div class="alert alert-danger" role="alert">{{ Session::get('error_submit') }}</div></div> --}}
 
 <Script>
     swal({
@@ -22,7 +21,7 @@
 
 
 
-<form id="formfield " method="POST" action="{{ route('save.rfp') }}"  class="form-horizontal"  enctype="multipart/form-data" > 
+{{-- <form id="formfield " method="POST" action="{{ route('save.rfp') }}"  class="form-horizontal"  enctype="multipart/form-data" >  --}}
 
     <div class="row" style="margin-top: -20px;"> 
         <div class="col-md-1">
@@ -193,9 +192,9 @@
 
 
                         {{-- Attachments --}}
-                        <label class="btn btn-primary" style="font-weight:normal;">
+                        {{-- <label class="btn btn-primary" style="font-weight:normal;">
                             Attach Files <input type="file" name="file[]" class="form-control-file" id="customFile" multiple hidden>
-                        </label>
+                        </label> --}}
 
                         {{-- Sample<input type="file" name="file[]" id="" multiple> --}}
 
@@ -249,20 +248,139 @@
                         
                     </div> 
 
+
+
+                   
+
   
-                </form>
+                {{-- </form> --}}
 
  
 
+                <div>
+                    <form method="POST" enctype="multipart/form-data" id="upload_form">
+                        @csrf
+                        <input type="file" name="file" id="file" onchange="chkFile(this)" >
+                        {{-- <button class="btn btn-primary" name="upload"  id="upload">UPLOAD</button> --}}
+                        <span class="text-danger" id="image-input-error"></span>
+                    </form>      
+                </div>
 
-
-
-
+                {{-- <form action="http://example.com">
+                    <input type="file" onchange="submit()" />
+                </form> --}}
         </section>
-    </div>
+    
+
+
+{{-- <script>
+//    $('#upload_form').submit(function(e) {
+
+    function submit(){
+       e.preventDefault();
+       let formData = new FormData(this);
+       $('#image-input-error').text('');
+
+       $.ajax({
+          type:'POST',
+          url: "{{ route('dropzone-action') }}",
+           data: formData,
+           contentType: false,
+           processData: false,
+           success: (response) => {
+             if (response) {
+               this.reset();
+               alert('Image has been uploaded successfully');
+             }
+       
+
+           },
+           error: function(response){
+              console.log(response);
+                $('#image-input-error').text(response.responseJSON.errors.file);
+           }
+       });
+
+  };
 
 
 
+</script> --}}
+
+
+
+<script>
+function chkFile(file1) {
+
+    // $.ajaxSetup({
+    // headers: {
+    // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    // }
+    // });
+
+    var file = $('#file')[0].files;
+
+    console.log(file);
+
+    // var formData = new FormData();
+    // formData.append('formData', file);
+    // formData.append('_token',CSRF_TOKEN);
+
+//     $.ajax({
+//         type:'POST',
+//         url: "{{ route('dropzone-action') }}",
+//         data: formData,
+//         contentType: false,
+//         processData: false,
+//         //Ajax events
+//         success: (response) => {
+//              if (response) {
+//                this.reset();
+//                alert('Image has been uploaded successfully');
+//              }
+       
+
+//            },
+//            error: function(response){
+//               console.log(response);
+//                 $('#image-input-error').text(response.responseJSON.errors.file);
+//            }
+//     });
+}
+</script>
+
+
+{{-- <script>
+    
+
+function chkFile(file1) {
+    var file = file1.files[0];
+    var formData = new FormData();
+    formData.append('formData', file);
+
+    $.ajax({
+    type: "POST",
+    url: "{{ route('dropzone-action') }}",    
+    contentType: false,
+    processData: false,
+    data: formData,
+    success: function (data) {
+      alert(data);
+      }
+  });
+}
+
+</script> --}}
+
+
+
+
+
+
+
+
+
+{{-- 
 
 <script>
     var main = [];
@@ -293,23 +411,25 @@
                 );
                             //add code to copy to public folder in erp-web
             }
+
+           // document.getElementById("upload_form").submit();
         });
     });
         // $("#attachmentsTable").on('click', '.btnDelete', function () {
         //     $(this).closest('tr').remove();
         // });
-</script>
+</script> --}}
 
 
 {{-- Create BLOB --}}
-<script>
+{{-- <script>
     $('#i_file').change( function(event) {
     var tmppath = URL.createObjectURL(event.target.files[0]);
     $("img").fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
     
     $("#disp_tmp_path").html("Temporary Path(Copy it and try pasting it in browser address bar) --> <strong>["+tmppath+"]</strong>");
 });
-</script>
+</script> --}}
 
 {{-- latest add attach --}}
 

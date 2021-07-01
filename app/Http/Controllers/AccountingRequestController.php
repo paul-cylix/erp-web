@@ -412,6 +412,35 @@ class AccountingRequestController extends Controller
         }
 
 
+
+
+        function action(Request $request){
+           
+
+
+            $request->validate([
+                'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+              ]);
+      
+           
+      
+              if ($request->file('file')) {
+                  $imagePath = $request->file('file');
+                  $imageName = $imagePath->getClientOriginalName();
+      
+                  $path = $request->file('file')->storeAs('uploads', $imageName, 'public');
+              }
+
+
+
+
+return response()->json('Image uploaded successfully');
+     
+
+
+
+        }
+
     // Upload files
     // public function rfpUploadFiles(Request $request){
 
